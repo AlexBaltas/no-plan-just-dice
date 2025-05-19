@@ -4,6 +4,12 @@ import { generateClient } from "aws-amplify/data";
 
 const client = generateClient<Schema>();
 
+useEffect(() => {
+    client.models.Todo.observeQuery().subscribe({
+      next: (data) => setTodos([...data.items]),
+    });
+  }, []);
+
 function App() {
   const [todos, setTodos] = useState<Array<Schema["Todo"]["type"]>>([]);
   
